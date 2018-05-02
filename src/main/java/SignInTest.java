@@ -9,22 +9,32 @@ import org.openqa.selenium.WebElement;
 public class SignInTest {
 
     WebDriver driver = null;
+    @BeforeTest
+    public void preCondition()
+     {
+    	setDriverPath();
+        driver = new ChromeDriver();  //Initialised driver after setting driver path
+        driver.get("https://www.cleartrip.com/");
+     }
+    
     @Test
     public void shouldThrowAnErrorIfSignInDetailsAreMissing() {
 
-        setDriverPath();
-        driver = new ChromeDriver();
-        driver.get("https://www.cleartrip.com/");
-        waitFor(2000);
+    	waitFor(2000);
         driver.findElement(By.linkText("Your trips")).click();
         driver.findElement(By.id("SignIn")).click();
         WebElement e = driver.findElement(By.id("modal_window"));
-        driver.switchTo().frame(e);
+        driver.switchTo().frame(e);  //Included switchToFrame
         driver.findElement(By.id("signInButton")).click();
         String errors1 = driver.findElement(By.id("errors1")).getText();
         Assert.assertTrue(errors1.contains("There were errors in your submission"));
         driver.switchTo().defaultContent();
-        driver.quit();
+    }
+    
+    @AfterTest //Added After test for quit browser after test
+    public void postCondition()
+    {
+    	driver.quit();
     }
 
     private void waitFor(int durationInMilliSeconds) {

@@ -14,7 +14,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class HotelBookingTest {
 
-	static WebDriver driver = null;
+	static WebDriver driver = null;  // All varibles and fns are declared as static
 
     @FindBy(linkText = "Hotels")
     static WebElement hotelLink;
@@ -28,39 +28,34 @@ public class HotelBookingTest {
     @FindBy(id = "travellersOnhome")
     static WebElement travellerSelection;
     
-   
+    @BeforeTest
+    public void preCondition()
+     {
+    	setDriverPath();
+        driver = new ChromeDriver();  //Initialised driver after setting driver path
+        driver.get("https://www.cleartrip.com/");
+     }
    
     @Test
     public static void shouldBeAbleToSearchForHotels() {
-    	
-    	
-        setDriverPath();
-        driver = new ChromeDriver();
-        driver.get("https://www.cleartrip.com/");
-        
-        PageFactory.initElements(driver, HotelBookingTest.class);
-        
+    	    	
+        PageFactory.initElements(driver, HotelBookingTest.class); //Called initElements to initalize driver elements
         hotelLink.click();
-
         localityTextBox.sendKeys("Indiranagar, Bangalore");
         waitFor(5000);
         driver.findElement(By.xpath("//a[text()='Indiranagar, Bangalore, Karnataka, India']")).click();
-       // List<WebElement> originOptions = driver.findElement(By.id("ui-id-1")).findElements(By.tagName("li"));
-        //originOptions.get(0).click();
-
         waitFor(2000);
-        
         driver.findElement(By.xpath("//*[@id='ui-datepicker-div']/div[1]/table/tbody/tr[3]/td[6]/a")).click();
         waitFor(2000);
-        
         driver.findElement(By.xpath("//*[@id='ui-datepicker-div']/div[1]/table/tbody/tr[3]/td[7]/a")).click();
-
-        
         new Select(travellerSelection).selectByVisibleText("1 room, 2 adults");
         searchButton.click();
-
-        driver.quit();
-
+    }
+    
+    @AfterTest //Added After test for quit browser after test
+    public void postCondition()
+    {
+    	driver.quit();
     }
 
     public static void setDriverPath() {
