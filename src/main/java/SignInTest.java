@@ -5,10 +5,10 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import org.openqa.selenium.WebElement;
 public class SignInTest {
 
     WebDriver driver = null;
-
     @Test
     public void shouldThrowAnErrorIfSignInDetailsAreMissing() {
 
@@ -16,14 +16,14 @@ public class SignInTest {
         driver = new ChromeDriver();
         driver.get("https://www.cleartrip.com/");
         waitFor(2000);
-
         driver.findElement(By.linkText("Your trips")).click();
         driver.findElement(By.id("SignIn")).click();
-
+        WebElement e = driver.findElement(By.id("modal_window"));
+        driver.switchTo().frame(e);
         driver.findElement(By.id("signInButton")).click();
-
         String errors1 = driver.findElement(By.id("errors1")).getText();
         Assert.assertTrue(errors1.contains("There were errors in your submission"));
+        driver.switchTo().defaultContent();
         driver.quit();
     }
 
@@ -47,5 +47,6 @@ public class SignInTest {
         }
     }
 
+   
 
 }
