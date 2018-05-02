@@ -5,8 +5,8 @@
   <test name="Test">
     <classes>
      <class name="FlightBookingTest" /> 
-      <!-- <class name="HotelBookingTest" />  -->
-      <!--  <class name="SignInTest" /> -->
+     <class name="HotelBookingTest" />
+     <class name="SignInTest" />
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

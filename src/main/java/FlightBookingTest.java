@@ -12,13 +12,14 @@ import java.util.List;
 
 public class FlightBookingTest {
 
-    WebDriver driver = new ChromeDriver();
+    WebDriver driver = null;
 
 
     @Test
     public void testThatResultsAppearForAOneWayJourney() {
 
         setDriverPath();
+        driver = new ChromeDriver();
         driver.get("https://www.cleartrip.com/");
         waitFor(2000);
         driver.findElement(By.id("OneWay")).click();
